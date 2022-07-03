@@ -74,3 +74,4 @@ root                     (project root folder)
 
 ## Authors
 * Baron Tshibasu
+* Camden Chadsey
