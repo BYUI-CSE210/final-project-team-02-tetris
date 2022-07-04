@@ -1,7 +1,9 @@
 # cse210-final
 
 # Tetris
-Tetris is a game where the player completes lines by placing falling colored bricks that have letters' squared shapes. When one line is correctly filled, the player wins one point per line. If the player misses completely filling a line and the bricks reach the top of the screen, the player loses 1 point. If all the points get to 0, the player loses 1 life. 
+Tetris is a game where the player completes bricks' lines by placing falling a set of bricks that have letters' squared shapes. Each set of bricks has its own color depending on the letter it represents (J, L, I, T, S, Z, or O). 
+
+When one line is completely filled, the wall collapses and any full line disappears. The player wins one point for each full line. If the player fails to fill a line, they can catch up and fill the next line as soon as possible. Otherwise, the blocks pile up until they reach the top of the screen. That way, the player loses 1 point. If all the points get down to 0, the player loses 1 life. The game starts with 3 lives.  
 
 
 Rules
@@ -29,24 +31,22 @@ The project files and folders are organized as follows:
 ```
 root                     (project root folder)
 +-- tetris               (source code for game)
+  +-- assests
   +-- game 
     +-- casting
         +-- actor           (specific classes)
         +-- cast            (specific classes)
-        +-- gem             (specific classes)
-        +-- rock            (specific classes)
+        +-- bricks             (specific classes)        
     +-- directing
         +-- director        (specific classes) 
     +-- services
-       +-- keyboard_service (specific classes)
-       +-- video_service    (specific classes)
-    +-- shared
-        +-- color           (specific classes)
-        +-- point           (specific classes) 
-  +-- __main__.py       (program entry point)
+        +-- keyboard_service (specific classes)
+        +-- video_service    (specific classes)
+    +-- __main__.py       (program entry point)
+    +-- constants.py           (all the program's constants)
 +-- README.md           (general info)
-```
 
+## Project Structure
 ## Required Technologies
 * Python 3.8.0
 * Pygame
@@ -57,8 +57,8 @@ root                     (project root folder)
 ·        (3) Help button
 (1) Game Scene
 ·        (1) User-controlled paddle
-·        (1) Falling bricks rotation
-·        (1) Falling bricks bricks
+·        (1) Bricks rotation
+·        (1) Falling bricks
 ·        (1) Locked position detection
 ·        (2) Life display
 ·        (2) Score display
