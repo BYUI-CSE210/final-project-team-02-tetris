@@ -6,15 +6,15 @@ Tetris is a game where the player completes bricks' lines by placing falling a s
 When one line is completely filled, the wall collapses and any full line disappears. The player wins one point for each full line. If the player fails to fill a line, they can catch up and fill the next line as soon as possible. Otherwise, the blocks pile up until they reach the top of the screen. That way, the player loses 1 point. If all the points get down to 0, the player loses 1 life. The game starts with 3 lives.  
 
 
-Rules
+# Rules
 Tetris is played according to the following rules:
 
-Move the falling brick left or right, depending on where you want to place it.
-Rotate the shape so it can fit the empty sapce and fill at least one line.
-When a line is filled, it disappears and the player wins & point per line. 
-The game is over if the pieces reach the top of the screen and there is no way to return the falling bricks back up to the top. So, try to avoid 
+1. Move the falling block left and right using the arrow keys to position in the empty space, depending on where it will fit.
+2. Use the down arrow key to accelerate the falling of the block. 
+3. Rotate the shape by pressing the space key as many times as needed until it fits the empty space and fill at least one line.
+4. When a row is filled, it disappears and the player wins & point per line. 
+5. The player loses 1 life at a time until the game is over, when the blocks reach the top of the screen. 
 
-So, you should avoid stacking the bricks trying to fill the empty spaces and thus reduce the size of the wall, so that it does not reach the top of the screen. 
 
 ## Getting Started
 Make sure you have Python 3.8.0 or newer installed and running on your machine. Open a terminal and browse to the project's root folder. Start the program by running the following command.

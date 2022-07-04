@@ -319,8 +319,7 @@ def main():
     # END KEYBOARD SERVICE
 
 def main_menu(win):
-    # Change to __main__()
-    main(win) # This one will become the director class
+    main(win)
 
 
 win = pygame.display.set_mode((screen_width, screen_height))
