@@ -36,7 +36,7 @@ root                     (project root folder)
     +-- casting
         +-- actor           (specific classes)
         +-- cast            (specific classes)
-        +-- bricks             (specific classes)        
+        +-- block             (specific classes)        
     +-- directing
         +-- director        (specific classes) 
     +-- services
