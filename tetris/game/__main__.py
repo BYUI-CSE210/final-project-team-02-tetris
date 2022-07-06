@@ -198,15 +198,68 @@ def create_grid(locked_positions={}):
     return grid
 
 
-
+# SCRIPTING
+# ACTIONS
+#==========================================================================================================================================
 def convert_shape_format(shape):
-    pass
+    # Move into the scripting folder
+    """Converts the multidimensional list into block-like shapes that a computer can read
+       
+       Args: shape
+
+       Returns: positions    
+    """
+
+    positions = []
+    
+    format = shape.shape[shape.rotation % len(shape.shape)] # get the corresponding sublist to the shape to display as the block rotates
+ 
+    for i, line in enumerate(format):
+        row = list(line)
+        for j, column in enumerate(row):
+            if column == '0':
+                positions.append((shape.x + j, shape.y + i))
+ 
+    for i, pos in enumerate(positions):
+        positions[i] = (pos[0] - 2, pos[1] - 4)
+ 
+    return positions
+
 
 def valid_space(shape, grid):
-    pass
+    # Move into the scripting folder
+    # Rename to check_space_action
+    """Checks the space to make sure the falling block fits
+
+        Args: shape, grid
+
+        Returns: True    
+    """
+    accepted_positions = [[(j, i) for j in range(10) if grid[i][j] == (0,0,0)] for i in range(20)]
+    accepted_positions = [j for sub in accepted_positions for j in sub]
+    formatted = convert_shape_format(shape)
+ 
+    for pos in formatted:
+        if pos not in accepted_positions:
+            if pos[1] > -1:
+                return False
+ 
+    return True
 
 def check_lost(positions):
-    pass
+    # Change to collide_top_action
+    """Checks if the blocks stack reach the top of the scene
+
+       Arg: positions
+
+       Returns: True or False
+    
+    """
+    for pos in positions:
+        x, y = pos
+        if y < 1:
+            return True
+    return False
 
 def get_shape():
     # This one will go to the director class
@@ -225,20 +278,19 @@ def get_shape():
 def draw_text_middle(text, size, color, surface):  
     pass
    
-def draw_grid(surface, row, col, grid):
+def draw_grid(surface, row, col):
     # This one will be part of the video_service class
-    # Change to draw_board
-    """Draws all of our objects to the screen. 
-
-        Args: surface, row, col, grid 
+    """Draws the grid lines in the game scene to help locate the blocks as they move down to the bottom of the screen.
+    
     """
-    for i in range(len(grid)):
-        for j in range(len(grid[i])):
-            pygame.draw.rect(surface, grid[i][j], (top_left_x + j* block_size, top_left_y + i * block_size, block_size, block_size), 0)
- 
-    # Draw the border frame for the game scene
-    draw_grid(surface, 20, 10)
-    pygame.draw.rect(surface, (255, 0, 0), (top_left_x, top_left_y, play_width, play_height), 5) # Change color to blue
+    start_x = top_left_x
+    start_y = top_left_y
+    for i in range(row):
+        pygame.draw.line(surface, (128,128,128), (start_x, start_y+ i*block_size), (start_x + play_width, start_y + i * block_size))  # horizontal lines
+        for j in range(col):
+            pygame.draw.line(surface, (128,128,128), (start_x + j * block_size, start_y), (start_x + j * block_size, start_y + play_height))  # vertical lines
+    
+    
     
 def clear_rows(grid, locked):
     pass
@@ -248,6 +300,11 @@ def draw_next_shape(shape, surface):
 
 def draw_window(surface, grid):
     # Send all three (background, font and caption) to constants file and then import here
+    # Change to draw_board
+    """Draws all of our objects to the screen. 
+
+        Args: surface, row, col, grid 
+    """
     surface.fill((0,0,0)) # Repale (0,0,0) by background = (0,250,154) -- mediumspringgreen	
     
     pygame.font.init()
@@ -256,6 +313,14 @@ def draw_window(surface, grid):
     ######
 
     surface.blit(caption, (top_left_x + play_width / 2 - (caption.get_width() / 2), 30)) # prints the label on the screen 
+
+    for i in range(len(grid)):
+        for j in range(len(grid[i])):
+            pygame.draw.rect(surface, grid[i][j], (top_left_x + j* block_size, top_left_y + i * block_size, block_size, block_size), 0)
+ 
+    # Draw the border frame for the game scene
+    draw_grid(surface, 20, 10)
+    pygame.draw.rect(surface, (255, 0, 0), (top_left_x, top_left_y, play_width, play_height), 5) # Change color to blue
 
     draw_grid(surface, grid)
     pygame.display.update()  
@@ -280,9 +345,22 @@ def main():
     current_piece = get_shape()
     next_piece = get_shape()
     clock = pygame.time.Clock() # will be moved to the constants file, and then imported here
-    fall_time = 0 # change to velocity
+    fall_time = 0 
+    fall_speed = 0.27 # change to delay
  
     while is_playing:
+        
+        grid = create_grid(locked_positions) # update the grid as the blocks fall
+        fall_time += clock.get_rawtime() # increment fall time
+        clock.tick()
+
+        if fall_time/1000 > fall_speed:
+            fall_time = 0
+            current_piece.y += 1
+
+            if not (valid_space(current_piece, grid)) and current_piece.y > 0 : 
+                current_piece.y -= 1
+                change_piece = True
     
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -313,7 +391,32 @@ def main():
                     if not valid_space(current_piece, grid):
                         current_piece.y -= 1
 
+        # Check all the falling blocks to see they need to be locked or moved down
+        shape_pos = convert_shape_format(current_piece)
+
+        # Match the grid color to the moving shape as it falls down
+        for i in range(len(shape_pos)):
+            x, y = shape_pos[i]
+
+            if y > -1:
+                grid[y][x] = current_piece.color
+
+        # Check if the block hit the bottom and update the grid with the block's color
+        if change_piece:
+            for pos in shape_pos:
+                p = (pos[0], pos[1])
+                locked_positions[p] = current_piece.color
+
+            current_piece = next_piece # update current_pice with the next piece
+            next_piece = get_shape() # Prepare next block
+            change_piece = False
+                    
         draw_window(win, grid)
+
+        if check_lost(locked_positions):
+            is_playing = False
+
+    pygame.display.quit()
 
     # =======================================================================================================================================
     # END KEYBOARD SERVICE
