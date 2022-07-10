@@ -7,7 +7,7 @@ import constants
 # functions
 # - create_grid
 # - draw_grid
-# - draw_window
+# - game_board
 # - rotating shape in main
 # - setting up the main
 
@@ -141,7 +141,7 @@ shape_colors = [(0, 255, 0), (255, 0, 0), (0, 255, 255), (255, 255, 0), (255, 16
 # index 0 - 6 represent shape
 
 
-class Piece(object):
+class Block(object):
     # To be change in Actor
     """
     Parent class for all blocks
@@ -225,29 +225,29 @@ def get_shape():
     """Generates random shapes"""
     global shapes, shape_colors
  
-    return Piece(5, 0, random.choice(shapes))
+    return Block(5, 0, random.choice(shapes))
 
-def draw_text_middle(surface, text, size, color):  
+def draw_text_middle(background, text, size, color):  
     """Prints the text in the middle of the screen
     
-    Args: text, size, color, surface
+    Args: text, size, color, background
 
     """
     font = pygame.font.SysFont(constants.FONT_FILE, size, bold=True)
     label = font.render(text, 1, color)
 
-    surface.blit(label, (top_left_x + scene_width /2 - (label.get_width()/2), top_left_y + scene_height/2 - label.get_height()/2))
+    background.blit(label, (top_left_x + scene_width /2 - (label.get_width()/2), top_left_y + scene_height/2 - label.get_height()/2))
 
    
-def draw_grid(surface, row, col):
+def draw_grid(background, row, col):
     """Draws the grid lines on the game scene"""
     # This function draws the grey grid lines that we see
     sx = top_left_x
     sy = top_left_y
     for i in range(row):
-        pygame.draw.line(surface, (128,128,128), (sx, sy+ i*30), (sx + scene_width, sy + i * 30))  # horizontal lines
+        pygame.draw.line(background, (128,128,128), (sx, sy+ i*30), (sx + scene_width, sy + i * 30))  # horizontal lines
         for j in range(col):
-            pygame.draw.line(surface, (128,128,128), (sx + j * 30, sy), (sx + j * 30, sy + scene_height))  # vertical lines
+            pygame.draw.line(background, (128,128,128), (sx + j * 30, sy), (sx + j * 30, sy + scene_height))  # vertical lines
 
 def clear_rows(grid, locked):
     """
@@ -279,9 +279,9 @@ def clear_rows(grid, locked):
     
     return inc
 
-def draw_next_shape(shape, surface):
+def draw_next_shape(shape, background):
     """Prepares and draws the next falling shape on the right side of the screen
-    Args: shape, surface
+    Args: shape, background
 
     """
     font = pygame.font.SysFont(constants.FONT_FILE, constants.FONT_SMALL)
@@ -295,20 +295,20 @@ def draw_next_shape(shape, surface):
         row = list(line)
         for j, column in enumerate(row):
             if column == '0':
-                pygame.draw.rect(surface, shape.color, (sx + j*30, sy + i*30, 30, 30), 0)
+                pygame.draw.rect(background, shape.color, (sx + j*30, sy + i*30, 30, 30), 0)
 
-    surface.blit(label, (sx + 10, sy- 30))
+    background.blit(label, (sx + 10, sy- 30))
 
-def draw_window(surface, grid, score=0, last_score = 0):
+def game_board(background, grid, score=0, last_score = 0):
     """Draws all actors on the screen"""
     
     # Set game scene's background
-    surface.fill((0,0,0))
+    background.fill((0,0,0))
     
     # Tetris Title
     font = pygame.font.SysFont(constants.FONT_FILE, constants.FONT_LARGE)
     label = font.render('TETRIS', 1, (255,255,255)) 
-    surface.blit(label, (top_left_x + scene_width / 2 - (label.get_width() / 2), 30))
+    background.blit(label, (top_left_x + scene_width / 2 - (label.get_width() / 2), 30))
 
     # current score
     font = pygame.font.SysFont(constants.FONT_FILE, constants.FONT_SMALL)
@@ -317,7 +317,7 @@ def draw_window(surface, grid, score=0, last_score = 0):
     sx = top_left_x + scene_width + 50
     sy = top_left_y + scene_height/2 - 100
 
-    surface.blit(label, (sx + 20, sy + 160))
+    background.blit(label, (sx + 20, sy + 160))
     
     # last score
     label = font.render('High Score: ' + last_score, 1, (255,255,255))
@@ -325,16 +325,16 @@ def draw_window(surface, grid, score=0, last_score = 0):
     sx = top_left_x - 200
     sy = top_left_y + 200
 
-    surface.blit(label, (sx + 20, sy + 160))
+    background.blit(label, (sx + 20, sy + 160))
 
  
     for i in range(len(grid)):
         for j in range(len(grid[i])):
-            pygame.draw.rect(surface, grid[i][j], (top_left_x + j* 30, top_left_y + i * 30, 30, 30), 0)
+            pygame.draw.rect(background, grid[i][j], (top_left_x + j* 30, top_left_y + i * 30, 30, 30), 0)
  
     # draw grid and border
-    draw_grid(surface, 20, 10)
-    pygame.draw.rect(surface, (255, 0, 0), (top_left_x, top_left_y, scene_width, scene_height), 5)
+    draw_grid(background, 20, 10)
+    pygame.draw.rect(background, (255, 0, 0), (top_left_x, top_left_y, scene_width, scene_height), 5)
     pygame.display.update()
 
 
@@ -373,16 +373,16 @@ def main():
     locked_positions = {}  # (x,y):(255,0,0)
     grid = create_grid(locked_positions)
  
-    change_piece = False
-    run = True
-    current_piece = get_shape()
-    next_piece = get_shape()
+    change_block = False
+    is_playing = True
+    current_block = get_shape()
+    next_block = get_shape()
     clock = pygame.time.Clock()
     fall_time = 0
 
     level_time = 0 # variable to increase the speed of falling blocks and make the game more difficult
  
-    while run:
+    while is_playing:
 
         # Increase the speed as time goes on
         level_time += clock.get_rawtime()
@@ -398,68 +398,68 @@ def main():
         fall_time += clock.get_rawtime()
         clock.tick()
     
-        # PIECE FALLING CODE
+        # Block FALLING CODE
         if fall_time/1000 >= fall_speed:
             fall_time = 0
-            current_piece.y += 1
-            if not (valid_space(current_piece, grid)) and current_piece.y > 0:
-                current_piece.y -= 1
-                change_piece = True
+            current_block.y += 1
+            if not (valid_space(current_block, grid)) and current_block.y > 0:
+                current_block.y -= 1
+                change_block = True
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
-                run = False
+                is_playing = False
                 pygame.display.quit()
                 quit()
  
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_LEFT:
-                    current_piece.x -= 1
-                    if not valid_space(current_piece, grid):
-                        current_piece.x += 1
+                    current_block.x -= 1
+                    if not valid_space(current_block, grid):
+                        current_block.x += 1
  
                 elif event.key == pygame.K_RIGHT:
-                    current_piece.x += 1
-                    if not valid_space(current_piece, grid):
-                        current_piece.x -= 1
+                    current_block.x += 1
+                    if not valid_space(current_block, grid):
+                        current_block.x -= 1
                 elif event.key == pygame.K_UP:
                     # rotate shape
-                    current_piece.rotation = current_piece.rotation + 1 % len(current_piece.shape)
-                    if not valid_space(current_piece, grid):
-                        current_piece.rotation = current_piece.rotation - 1 % len(current_piece.shape)
+                    current_block.rotation = current_block.rotation + 1 % len(current_block.shape)
+                    if not valid_space(current_block, grid):
+                        current_block.rotation = current_block.rotation - 1 % len(current_block.shape)
  
                 if event.key == pygame.K_DOWN:
                     # move shape down
-                    current_piece.y += 1
-                    if not valid_space(current_piece, grid):
-                        current_piece.y -= 1
+                    current_block.y += 1
+                    if not valid_space(current_block, grid):
+                        current_block.y -= 1
 
 
-        shape_pos = convert_shape_format(current_piece)
+        shape_pos = convert_shape_format(current_block)
 
-        # add color of piece to the grid for drawing
+        # add color of Block to the grid for drawing
         for i in range(len(shape_pos)):
             x, y = shape_pos[i]
             if y > -1: # If we are not above the screen
-                grid[y][x] = current_piece.color
+                grid[y][x] = current_block.color
         
-        # IF PIECE HIT GROUND
-        if change_piece:
+        # IF Block HIT GROUND
+        if change_block:
             for pos in shape_pos:
                 p = (pos[0], pos[1])
-                locked_positions[p] = current_piece.color
-            current_piece = next_piece
-            next_piece = get_shape()
-            change_piece = False            
+                locked_positions[p] = current_block.color
+            current_block = next_block
+            next_block = get_shape()
+            change_block = False            
             score += clear_rows(grid, locked_positions) * 10 # Get score
 
             # call four times to check for multiple clear rows
             clear_rows(grid, locked_positions)
 
-        draw_window(win, grid, score, last_score)
+        game_board(win, grid, score, last_score)
 
         # Call the draw_next_shape function to display the newt shape on the screen
-        draw_next_shape(next_piece, win)
+        draw_next_shape(next_block, win)
         pygame.display.update()
 
         # Check if the player lost
@@ -467,7 +467,7 @@ def main():
             draw_text_middle(win, "YOU LOST!", 80, (255,255,255))
             pygame.display.update()
             pygame.time.delay(1500)
-            run = False
+            is_playing = False
             update_score(score)
 
 
@@ -477,14 +477,14 @@ def main_menu(win):
     
     Arg: win
     """
-    run = True
-    while run:
+    is_playing = True
+    while is_playing:
         win.fill((0,0,0))
         draw_text_middle(win, 'Press Enter to start', 60, (255,255,255))
         pygame.display.update()
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
-                run = False
+                is_playing = False
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_KP_ENTER:
                     main()
