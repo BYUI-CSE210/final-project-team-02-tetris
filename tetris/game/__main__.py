@@ -14,7 +14,7 @@ pygame.init()
 pygame.font.init()
 
 mixer.init()
-mixer.music.load('Music File/bensound-summer_wav_music.wav')
+mixer.music.load("tetris/assets/bensound-summer_ogg_music.wav")
 mixer.music.play()
 
 # BLOCK CLASS

@@ -42,9 +42,9 @@ FONT_MEDIUM = 40
 FONT_LARGE = 60
 
 # SOUND
-BOUNCE_SOUND = "batter-complete/batter/assets/sounds/boing.wav"
-WELCOME_SOUND = "batter-complete/batter/assets/sounds/start.wav"
-OVER_SOUND = "batter-complete/batter/assets/sounds/over.wav"
+#BOUNCE_SOUND = "batter-complete/batter/assets/sounds/boing.wav"
+#WELCOME_SOUND = "batter-complete/batter/assets/sounds/start.wav"
+#OVER_SOUND = "batter-complete/batter/assets/sounds/over.wav""""
 
 # TEXT
 ALIGN_CENTER = 0
