@@ -11,6 +11,10 @@ from casting.color import Color
 GAME_NAME = "Tetris"
 FRAME_RATE = 60
 
+# display = pygame.display.set_mode((width, height))
+pygame.display.set_caption("Tetris")
+CLOCK = pygame.time.Clock()
+
 # SCREEN
 SCREEN_WIDTH = 1040
 SCREEN_HEIGHT = 800
@@ -22,6 +26,14 @@ FIELD_TOP = 60
 FIELD_BOTTOM = SCREEN_HEIGHT
 FIELD_LEFT = 0
 FIELD_RIGHT = SCREEN_WIDTH
+
+FIELD_WIDTH = 300  # meaning 300 // 10 = 30 width per block
+FIELD_HEIGHT = 600  # meaning 600 // 20 = 20 height per block
+
+BLOCK_SIZE = 30
+
+TOP_LEFT_X = (SCREEN_WIDTH - FIELD_WIDTH) // 2
+TOP_LEFT_Y = SCREEN_HEIGHT - FIELD_HEIGHT
 
 # FONT
 FONT_FILE = "tetris/assets/tetris-cufonfonts/Tetris.ttf"
@@ -43,6 +55,7 @@ ALIGN_RIGHT = 2
 BLACK = Color(0, 0, 0)
 WHITE = Color(255, 255, 255)
 PURPLE = Color(255, 0, 255)
+YELLOW = Color(255, 255, 0)
 
 # KEYS
 LEFT = "left"
@@ -51,7 +64,7 @@ SPACE = "space"
 ENTER = "enter"
 PAUSE = "p"
 
-# SCENES
+# fieldS
 NEW_GAME = 0
 TRY_AGAIN = 1
 NEXT_LEVEL = 2

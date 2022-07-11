@@ -9,9 +9,9 @@ When one line is completely filled, the wall collapses and any full line disappe
 # Rules
 Tetris is played according to the following rules:
 
-1. Move the falling block left and right using the arrow keys to position in the empty space, depending on where it will fit.
-2. Use the down arrow key to accelerate the falling of the block. 
-3. Rotate the shape by pressing the space key as many times as needed until it fits the empty space and fill at least one line.
+1. Start the game by pressing Enter or Space key, and then move the falling block left and right using the arrow keys to position in the empty spot, depending on where it will fit.
+2. Use the down arrow key to accelerate the falling of the block, and the space key to pause and resume the game. 
+3. Rotate the shape by pressing the space key or the up direction arrow key as many times as needed until the block's position fits to the empty spot when possible.
 4. When a row is filled, it disappears and the player wins & point per line. 
 5. The player loses 1 life at a time until the game is over, when the blocks reach the top of the screen. 
 
@@ -59,7 +59,7 @@ root                     (project root folder)
 ·        (1) User-controlled paddle
 ·        (1) Bricks rotation
 ·        (1) Falling bricks
-·        (1) Locked position detection
+·        (1) Locked spots detection
 ·        (2) Life display
 ·        (2) Score display
 ·        (2) Sound effects
