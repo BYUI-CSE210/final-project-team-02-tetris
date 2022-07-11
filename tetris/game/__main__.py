@@ -1,15 +1,8 @@
 import pygame
 import random
 import constants
-
-# creating the data structure for pieces
-# setting up global vars
-# functions
-# - create_grid
-# - draw_grid
-# - game_board
-# - rotating shape in main
-# - setting up the main
+from pygame.locals import *
+from pygame import mixer
 
 """
 10 x 20 square grid
@@ -17,7 +10,12 @@ shapes: S, Z, I, O, J, L, T
 represented in order by 0 - 6
 """
 
+pygame.init()
 pygame.font.init()
+
+mixer.init()
+mixer.music.load('Music File/bensound-summer_wav_music.wav')
+mixer.music.play()
 
 # BLOCK CLASS
 # ==========================================================================================================================================
@@ -168,7 +166,7 @@ def create_grid(locked_spots={}):
     return grid
 
 def shape_to_block(shape):
-    """Converts shapes to bricks blocks
+    """Converts shapes to blocks
     
     Arg: shape
     
@@ -279,7 +277,7 @@ def draw_next_shape(shape, background):
 
     """
     font = pygame.font.SysFont(constants.FONT_FILE, constants.FONT_SMALL)
-    label = font.render('Next Shape', 1, (255,255,255))
+    label = font.render('Next Block', 1, (255,255,255))
 
     sx = constants.TOP_LEFT_X + constants.FIELD_WIDTH + 50
     sy = constants.TOP_LEFT_Y + constants.FIELD_HEIGHT/2 - 100
