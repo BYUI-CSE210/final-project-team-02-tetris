@@ -45,48 +45,6 @@ class Director:
         return False
 
 
-    def prepare_scene(background, grid, score=0, last_score = 0):
-        """Draws all actors on the screen
-        
-        
-        """
-        
-        # Set game scene's background
-        background.fill((0,0,0))
-        
-        # Tetris Title
-        font = pygame.font.SysFont(constants.FONT_FILE, constants.FONT_LARGE)
-        label = font.render('TETRIS', 1, (255,255,255)) 
-        background.blit(label, (constants.TOP_LEFT_X + constants.FIELD_WIDTH / 2 - (label.get_width() / 2), 30))
-
-        # current score
-        font = pygame.font.SysFont(constants.FONT_FILE, constants.FONT_SMALL)
-        label = font.render('Score: ' + str(score), 1, (255,255,255))
-
-        sx = constants.TOP_LEFT_X + constants.FIELD_WIDTH + 50
-        sy = constants.TOP_LEFT_Y + constants.FIELD_HEIGHT/2 - 100
-
-        background.blit(label, (sx + 20, sy + 160))
-        
-        # last score
-        label = font.render('High Score: ' + last_score, 1, (255,255,255))
-
-        sx = constants.TOP_LEFT_X - 200
-        sy = constants.TOP_LEFT_Y + 200
-
-        background.blit(label, (sx + 20, sy + 160))
-
-    
-        for i in range(len(grid)):
-            for j in range(len(grid[i])):
-                pygame.draw.rect(background, grid[i][j], (constants.TOP_LEFT_X + j* 30, constants.TOP_LEFT_Y + i * 30, 30, 30), 0)
-    
-        # draw grid and border
-        VideoService.draw_grid(background, 20, 10)
-        pygame.draw.rect(background, (255, 0, 0), (constants.TOP_LEFT_X, constants.TOP_LEFT_Y, constants.FIELD_WIDTH, constants.FIELD_HEIGHT), 5)
-        pygame.display.update()
-
-
     
     def start_game(self):
         """Starts the game"""
@@ -223,33 +181,4 @@ class Director:
             pygame.display.update()
 
                 
-    def main_menu(win):
-        """Displays a main menu to direct the player to start, restart, or end the game
-        
-        Arg: win (represents the background)
-        """
-        is_playing = True
-        while is_playing:
-            win.fill((0,0,0))
-            VideoService.draw_text(win, 'Press ENTER or SPACE key to start', constants.FONT_LARGE, (255,255,0))
-            pygame.display.update()
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    is_playing = False
-                if event.type == pygame.KEYDOWN:
-                    if event.key == pygame.K_KP_ENTER or event.key == pygame.K_SPACE:
-                        start_game()
-
-    pygame.display.quit()
-
-    #main_menu()  # start game
-
-    # setup the pygame window and give it a caption
-    win = pygame.display.set_mode((constants.SCREEN_WIDTH, constants.SCREEN_HEIGHT))
-    pygame.display.set_caption('Tetris')
-
-
-    # call the main loop via the main_menu
-    main_menu(win)
-
-   
+    

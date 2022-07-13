@@ -135,7 +135,7 @@ columns = 10  # x
 
 
 # GAME
-GAME_NAME = "Tetris"
+GAME_TITLE = "Tetris"
 FRAME_RATE = 60
 
 
@@ -149,6 +149,7 @@ SCREEN_HEIGHT = 800
 CENTER_X = SCREEN_WIDTH / 2
 CENTER_Y = SCREEN_HEIGHT / 2
 WINDOW = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
+BACKGROUND = "tetris_3/assets/tetris-bg-image/tetris-bg-1.jpg"
 
 # FIELD
 FIELD_TOP = 60
@@ -169,6 +170,7 @@ FONT_FILE = "tetris/assets/tetris-cufonfonts/Tetris.ttf"
 FONT_SMALL = 32
 FONT_MEDIUM = 40
 FONT_LARGE = 60
+FONT_XLARGE = 90
 
 # SOUND
 #BOUNCE_SOUND = "batter-complete/batter/assets/sounds/boing.wav"
@@ -238,6 +240,6 @@ SCORE_FORMAT = "SCORE: {}"
 
 # DIALOG
 DIALOG_GROUP = "dialogs"
-ENTER_TO_START = "PRESS ENTER TO START"
-PREP_TO_LAUNCH = "PREPARING TO LAUNCH"
+ENTER_TO_START = "Press ENTER or SPACE to start"
+PREP_TO_LAUNCH = "TETRIS"
 WAS_GOOD_GAME = "GAME OVER"
