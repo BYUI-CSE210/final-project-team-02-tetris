@@ -21,7 +21,7 @@ pygame.init()
 pygame.font.init()
 
 mixer.init()
-mixer.music.load("tetris/assets/bensound-summer_ogg_music.wav")
+mixer.music.load("assets/bensound-summer_ogg_music.wav")
 mixer.music.play()
 
 class Director:
@@ -51,7 +51,7 @@ class Director:
         return False
 
 
-    def prepare_scene(background, grid, score=0, last_score = 0):
+    def prepare_scene(self, background, grid, score=0, last_score = 0):
         """Draws all actors on the screen
         
         
@@ -94,7 +94,7 @@ class Director:
 
 
     
-    def start_game():
+    def start_game(self):
         """Starts the game"""
         global grid
 
@@ -192,7 +192,8 @@ class Director:
                 # call four times to check for multiple clear rows
                 CheckCollisionAction.clear_rows(grid, locked_spots)
 
-            VideoService.prepare_scene(constants.WINDOW, grid, score, last_score)
+            self.prepare_scene(constants.WINDOW, grid, score, last_score)
+            
 
             # Call the VideoService.draw_next_block function to display the newt shape on the screen
             VideoService.draw_next_block(next_block, constants.WINDOW)
