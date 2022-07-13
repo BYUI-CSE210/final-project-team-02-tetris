@@ -57,8 +57,8 @@ root                     (project root folder)
 ·        (3) Help button
 (1) Game Scene
 ·        (1) User-controlled paddle
-·        (1) Bricks rotation
-·        (1) Falling bricks
+·        (1) Falling blocks 
+·        (1) Blocks rotation
 ·        (1) Locked spots detection
 ·        (2) Life display
 ·        (2) Score display
@@ -72,6 +72,10 @@ root                     (project root folder)
 ·        (2) Announcement
 ·        (2) Restart button
 
+# Extra point comment
+Because of all the features above, we believe that we deserve the extra bonus point. Other than that, we used most of the principles of programming with classes learned in class, including maintainability. We understand that the program not perfect and easily be improved
+because it was built following the principles of maintainability. 
+
 ## Authors
-* Baron Tshibasu
+* Baron Tshibasu (tshibasubaron@yahoo.fr)
 * Camden Chadsey
