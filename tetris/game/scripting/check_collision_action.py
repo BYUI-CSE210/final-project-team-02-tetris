@@ -1,4 +1,7 @@
-from constants import *
+import pygame
+import constants
+from pygame.locals import *
+from pygame import mixer
 from game.scripting.action import Action
 from game.casting.block import Block
 
@@ -46,14 +49,25 @@ class CheckCollisionAction:
                 for j in range(len(row)):
                     try:
                         del locked[(j, i)]
+                        
                     except:
                         continue
+                
         if inc > 0:
             for key in sorted(list(locked), key=lambda x: x[1])[::-1]:
                 x, y = key
                 if y < ind:
                     newKey = (x, y + inc)
                     locked[newKey] = locked.pop(key)
+
+                mixer.music.load(constants.CLEAR_ROW_SOUND)
+                pygame.mixer.music.play()
+
+        
+
+            
+            
+        
         
         return inc
 
@@ -66,5 +80,6 @@ class CheckCollisionAction:
         for pos in positions:
             x, y = pos
             if y < 1:
-                return True
+                return True            
+
         return False

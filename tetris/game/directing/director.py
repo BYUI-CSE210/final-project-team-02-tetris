@@ -19,8 +19,8 @@ pygame.init()
 pygame.font.init()
 
 mixer.init()
-mixer.music.load("tetris/assets/bensound-summer_ogg_music.wav")
-mixer.music.play()
+"""mixer.music.load(constants.WELCOME_SOUND)
+mixer.music.play()"""
 
 class Director:
     """A person who directs the game."""
@@ -115,12 +115,12 @@ class Director:
                 
                     elif event.key == pygame.K_DOWN:
                         # move shape down
-                        current_block.y += 4
+                        current_block.y += 2
                         if not CheckCollisionAction.check_valid_spot(current_block, grid):
-                            current_block.y -= 4
-
+                            current_block.y -= 2
+                            
                     elif event.key == pygame.K_SPACE:
-                        VideoService.is_paused()
+                        self.is_paused()
 
 
             shape_pos = Block.shape_to_block(current_block)
@@ -140,6 +140,9 @@ class Director:
                 next_block = Block.get_block()
                 change_block = False            
                 score += CheckCollisionAction.clear_rows(grid, locked_spots) * 10 # Get score
+                
+                mixer.music.load(constants.BLOCK_FALL_SOUND)
+                pygame.mixer.music.play()
 
                 # call four times to check for multiple clear rows
                 CheckCollisionAction.clear_rows(grid, locked_spots)
@@ -158,8 +161,11 @@ class Director:
                 is_playing = False
                 Score.update_score(score)
 
+                mixer.music.load(constants.GAME_OVER_SOUND)
+                pygame.mixer.music.play()
 
-    def is_paused():
+
+    def is_paused(self):
             
         pause = True
         
@@ -171,7 +177,7 @@ class Director:
 
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_SPACE:
-                        pause = False
+                        pause = False                                               
                         
                     elif event.key == pygame.K_q:
                         pygame.quit()
@@ -179,6 +185,9 @@ class Director:
         
             VideoService.draw_text(constants.WINDOW, "PAUSED", constants.FONT_MEDIUM, (0,255,255))
             pygame.display.update()
+            pygame.mixer.music.stop()
+
+        pygame.mixer.music.play()
 
                 
     

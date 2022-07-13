@@ -149,7 +149,7 @@ SCREEN_HEIGHT = 800
 CENTER_X = SCREEN_WIDTH / 2
 CENTER_Y = SCREEN_HEIGHT / 2
 WINDOW = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
-BACKGROUND = "tetris_3/assets/tetris-bg-image/tetris-bg-1.jpg"
+BACKGROUND = "tetris/assets/tetris-bg-image/tetris-bg-1.jpg"
 
 # FIELD
 FIELD_TOP = 60
@@ -173,9 +173,10 @@ FONT_LARGE = 60
 FONT_XLARGE = 90
 
 # SOUND
-#BOUNCE_SOUND = "batter-complete/batter/assets/sounds/boing.wav"
-#WELCOME_SOUND = "batter-complete/batter/assets/sounds/start.wav"
-#OVER_SOUND = "batter-complete/batter/assets/sounds/over.wav""""
+WELCOME_SOUND = "tetris/assets/bensound-summer_ogg_music.wav"
+CLEAR_ROW_SOUND = "tetris/assets/tetris-clear-row.wav"
+BLOCK_FALL_SOUND = "tetris/assets/tetris-block-fall.wav"
+GAME_OVER_SOUND = "tetris/assets/tetris-game-over.wav"
 
 # TEXT
 ALIGN_CENTER = 0
