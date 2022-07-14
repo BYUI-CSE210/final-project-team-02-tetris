@@ -88,7 +88,7 @@ class Director:
                     current_block.y -= 1
                     change_block = True
 
-                    # Play sound
+                    # Play sound for falling block
                     mixer.music.load(constants.BLOCK_FALL_SOUND)
                     pygame.mixer.music.play()
 
