@@ -140,7 +140,7 @@ FRAME_RATE = 60
 
 
 # display = pygame.display.set_mode((width, height))
-pygame.display.set_caption("Tetris")
+CAPTION = pygame.display.set_caption(GAME_TITLE)
 CLOCK = pygame.time.Clock()
 
 # SCREEN
@@ -149,7 +149,7 @@ SCREEN_HEIGHT = 800
 CENTER_X = SCREEN_WIDTH / 2
 CENTER_Y = SCREEN_HEIGHT / 2
 WINDOW = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
-BACKGROUND = "tetris/assets/tetris-bg-image/tetris-bg-1.jpg"
+BACKGROUND_IMAGE = "tetris/assets/tetris-bg-image/tetris-bg-1.jpg"
 
 # FIELD
 FIELD_TOP = 60
@@ -184,10 +184,10 @@ ALIGN_LEFT = 1
 ALIGN_RIGHT = 2
 
 # COLORS
-BLACK = Color(0, 0, 0)
-WHITE = Color(255, 255, 255)
-PURPLE = Color(255, 0, 255)
-YELLOW = Color(255, 255, 0)
+BLACK = (0, 0, 0)
+WHITE = (255, 255, 255)
+PURPLE = (255, 0, 255)
+YELLOW = (255, 255, 0)
 
 # KEYS
 LEFT = "left"
