@@ -27,7 +27,7 @@ class CheckCollisionAction:
             if pos not in valid_spots:
                 if pos[1] > -1:
                     return False
-    
+
         return True
 
     def clear_rows(self, grid, locked):

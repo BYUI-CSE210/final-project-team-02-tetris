@@ -85,12 +85,11 @@ class Director:
                 fall_time = 0
                 current_block.y += 1
                 if not (self.collide.check_valid_spot(current_block, grid)) and current_block.y > 0:
-                    current_block.y -= 1
-                    change_block = True
-
                     # Play sound for falling block
                     mixer.music.load(constants.BLOCK_FALL_SOUND)
                     pygame.mixer.music.play()
+                    current_block.y -= 1
+                    change_block = True
 
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
@@ -156,14 +155,17 @@ class Director:
 
             # Check if the player lost
             if self.collide.is_game_over(locked_spots):
-                VideoService.draw_text(constants.WINDOW, "YOU LOST!", constants.FONT_LARGE, constants.WHITE)
-                pygame.display.update()
-                pygame.time.delay(1000)
                 
-                Score.update_score(self.score)
-
                 mixer.music.load(constants.GAME_OVER_SOUND)
                 pygame.mixer.music.play()
+
+                VideoService.draw_text(constants.WINDOW, "YOU LOST!", constants.FONT_LARGE, constants.WHITE)
+                pygame.display.update()
+                pygame.time.delay(4000)
+                
+                #Score.update_score(self.score)
+
+                
 
                 is_playing = False
 
