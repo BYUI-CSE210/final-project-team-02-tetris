@@ -30,7 +30,7 @@ class Director:
         
         
         """
-        pass
+        self.collide = CheckCollisionAction()
         
 
     def is_gameOver(positions):
@@ -43,16 +43,14 @@ class Director:
             if y < 1:
                 return True
         return False
-
-
     
     def start_game(self):
         """Starts the game"""
         global grid
 
         # Scores variables
-        score = 0
-        last_score = Score.max_score()
+        self.score = 0
+        self.last_score = Score.max_score(self)
     
         locked_spots = {}  # (x,y):(255,0,0)
         grid = Grid.create_grid(locked_spots)
@@ -86,9 +84,13 @@ class Director:
             if fall_time/1000 >= fall_speed:
                 fall_time = 0
                 current_block.y += 1
-                if not (CheckCollisionAction.check_valid_spot(current_block, grid)) and current_block.y > 0:
+                if not (self.collide.check_valid_spot(current_block, grid)) and current_block.y > 0:
                     current_block.y -= 1
                     change_block = True
+
+                    # Play sound
+                    mixer.music.load(constants.BLOCK_FALL_SOUND)
+                    pygame.mixer.music.play()
 
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
@@ -99,24 +101,24 @@ class Director:
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_LEFT:
                         current_block.x -= 1
-                        if not CheckCollisionAction.check_valid_spot(current_block, grid):
+                        if not self.collide.check_valid_spot(current_block, grid):
                             current_block.x += 1
     
                     elif event.key == pygame.K_RIGHT:
                         current_block.x += 1
-                        if not CheckCollisionAction.check_valid_spot(current_block, grid):
+                        if not self.collide.check_valid_spot(current_block, grid):
                             current_block.x -= 1
                     elif event.key == pygame.K_UP:
                         # rotate shape
                         current_block.rotation = current_block.rotation + 1 % len(current_block.shape)
-                        if not CheckCollisionAction.check_valid_spot(current_block, grid):
+                        if not self.collide.check_valid_spot(current_block, grid):
                             current_block.rotation = current_block.rotation - 1 % len(current_block.shape)
 
                 
                     elif event.key == pygame.K_DOWN:
                         # move shape down
                         current_block.y += 2
-                        if not CheckCollisionAction.check_valid_spot(current_block, grid):
+                        if not self.collide.check_valid_spot(current_block, grid):
                             current_block.y -= 2
                             
                     elif event.key == pygame.K_SPACE:
@@ -139,30 +141,31 @@ class Director:
                 current_block = next_block
                 next_block = Block.get_block()
                 change_block = False            
-                score += CheckCollisionAction.clear_rows(grid, locked_spots) * 10 # Get score
+                self.score += self.collide.clear_rows(grid, locked_spots) * 10 # Get score by multiplying increment counter integer by 10
                 
-                mixer.music.load(constants.BLOCK_FALL_SOUND)
-                pygame.mixer.music.play()
-
                 # call four times to check for multiple clear rows
-                CheckCollisionAction.clear_rows(grid, locked_spots)
+                self.collide.clear_rows(grid, locked_spots)
 
-            VideoService.prepare_scene(constants.WINDOW, grid, score, last_score)
+                
+
+            VideoService.prepare_scene(constants.WINDOW, grid, self.score, self.last_score)
 
             # Call the VideoService.draw_next_block function to display the newt shape on the screen
             VideoService.draw_next_block(next_block, constants.WINDOW)
             pygame.display.update()
 
             # Check if the player lost
-            if CheckCollisionAction.is_game_over(locked_spots):
-                VideoService.draw_text(constants.WINDOW, "YOU LOST!", constants.FONT_LARGE, (255,255,255))
+            if self.collide.is_game_over(locked_spots):
+                VideoService.draw_text(constants.WINDOW, "YOU LOST!", constants.FONT_LARGE, constants.WHITE)
                 pygame.display.update()
                 pygame.time.delay(1000)
-                is_playing = False
-                Score.update_score(score)
+                
+                Score.update_score(self.score)
 
                 mixer.music.load(constants.GAME_OVER_SOUND)
                 pygame.mixer.music.play()
+
+                is_playing = False
 
 
     def is_paused(self):

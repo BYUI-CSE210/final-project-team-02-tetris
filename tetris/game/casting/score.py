@@ -1,11 +1,11 @@
 class Score:
     """Handles the player's scores"""
     
-    def update_score(nscore):
+    def update_score(self, nscore):
         """Creates a file to save score
         Arg: nscore
         """
-        score = max_score()
+        score = self.max_score()
 
         with open('scores.txt', 'w') as f:
             if int(score) > nscore:
@@ -13,10 +13,10 @@ class Score:
             else:
                 f.write(str(nscore))
 
-    def max_score():
+    def max_score(self):
         """Saves maximum scores earned by the player
         
-        Returns: score (integer)
+        Returns: score (higher score as integer)
         """
         with open('tetris/assets/scores.txt', 'r') as f:
             lines = f.readlines()

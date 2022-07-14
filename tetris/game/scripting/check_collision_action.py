@@ -13,7 +13,7 @@ class CheckCollisionAction:
         pass
         
     
-    def check_valid_spot(shape, grid):
+    def check_valid_spot(self, shape, grid):
         """Checks for a valid space that fits to the shape
         Args: shape, grid
 
@@ -30,13 +30,13 @@ class CheckCollisionAction:
     
         return True
 
-    def clear_rows(grid, locked):
+    def clear_rows(self, grid, locked):
         """
         Checks and clears every filled row, and then shifted down all the blocks.
 
         Args: grid, locked
 
-        Returns: inc (integer)
+        Returns: inc (increment counter as integer)
 
         """
         inc = 0
@@ -63,16 +63,10 @@ class CheckCollisionAction:
                 mixer.music.load(constants.CLEAR_ROW_SOUND)
                 pygame.mixer.music.play()
 
-        
-
-            
-            
-        
-        
         return inc
 
 
-    def is_game_over(positions):
+    def is_game_over(self, positions):
         """Checks if the player lost
         Arg: positions
         Returns: True or False (boolean)
