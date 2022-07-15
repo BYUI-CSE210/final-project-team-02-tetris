@@ -4,13 +4,14 @@ from pygame.locals import *
 from pygame import mixer
 from game.scripting.action import Action
 from game.casting.block import Block
+from game.casting.sound import Sound
 
 
 """class CheckOverAction(Action):"""
 class CheckCollisionAction:
 
     def __init__(self):
-        pass
+        self.play = Sound()
         
     
     def check_valid_spot(self, shape, grid):
@@ -60,8 +61,7 @@ class CheckCollisionAction:
                     newKey = (x, y + inc)
                     locked[newKey] = locked.pop(key)
 
-                mixer.music.load(constants.CLEAR_ROW_SOUND)
-                pygame.mixer.music.play()
+                self.play.clear_row_sound()
 
         return inc
 
@@ -74,6 +74,6 @@ class CheckCollisionAction:
         for pos in positions:
             x, y = pos
             if y < 1:
-                return True            
+                return True   
 
         return False

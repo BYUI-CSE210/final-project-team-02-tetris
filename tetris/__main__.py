@@ -3,6 +3,7 @@ import constants
 from game.directing.director import Director
 from game.services.video_service import VideoService
 from game.casting.background import Background
+from game.casting.sound import Sound
 from pygame.locals import *
 from pygame import mixer
 
@@ -13,7 +14,7 @@ def main():
     director.start_game()
 
 # game actually starts with the main menu
-def __main_menu__(win):
+def __launch__(win):
     """Displays a main menu to direct the player to start, restart, or end the game
     
     Arg: win (represents the background)
@@ -22,9 +23,7 @@ def __main_menu__(win):
     
     bg = Background(constants.BACKGROUND_IMAGE, [0,0])
     
-    mixer.init()
-    mixer.music.load(constants.WELCOME_SOUND)
-    mixer.music.play()
+    Sound.welcome_sound()
     
     # Enter the game loop
     while is_playing:        
@@ -53,8 +52,8 @@ win = constants.WINDOW
 constants.CAPTION
 
 
-# call the main loop via the main_menu
-__main_menu__(win)
+# call the main loop via the launch
+__launch__(win)
 
 
 
