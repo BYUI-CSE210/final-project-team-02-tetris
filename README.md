@@ -59,29 +59,22 @@ root                     (project root folder)
 * Pygame
 
 # Features
-(2) Main Scene
-·        (2) Play button
-·        (3) Help button
-(1) Game Scene
-·        (1) User-controlled paddle
-·        (1) Falling blocks 
-·        (1) Blocks rotation
-·        (1) Locked spots detection
-·        (2) Life display
+(1) Main Scene
+·        (1) Welcoming message
+·        
+(2) Game Scene
+·        (2) User-controlled paddle
+·        (2) Falling blocks 
+·        (2) Blocks rotation
+·        (2) Locked spots detection
 ·        (2) Score display
 ·        (2) Sound effects
-(3) Help Scene
-·        (3) Help text
-·        (3) Back button
-(2) Win Scene
-·        (2) Announcement
-(2) Lose Scene
-·        (2) Announcement
-·        (2) Restart button
+(3) Lose Scene
+·        (3) Announcement
+·        (3) Restart button
 
 # Extra point comment
-Because of all the features above, we believe that we deserve the extra bonus point. Other than that, we used most of the principles of programming with classes learned in class, including maintainability. We understand that the program not perfect and easily be improved
-because it was built following the principles of maintainability. 
+Given of all the features above, we believe that we deserve the extra bonus point. Additionally, we used almost all of the principles of programming with classes learned in class, including maintainability. We understand that the program is not perfect at this time but it can easily be improved. 
 
 ## Authors
 * Baron Tshibasu (tshibasubaron@yahoo.fr)
