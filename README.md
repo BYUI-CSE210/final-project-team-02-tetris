@@ -35,10 +35,17 @@ root                     (project root folder)
   +-- game 
     +-- casting
         +-- actor           (specific classes)
-        +-- cast            (specific classes)
-        +-- block             (specific classes)        
+        +-- background           (specific classes)        
+        +-- block             (specific classes)   
+        +-- color            (specific classes)     
+        +-- grid            (specific classes)
+        +-- score            (specific classes)
+        +-- sound            (specific classes)
     +-- directing
-        +-- director        (specific classes) 
+        +-- director        (specific classes)    
+    +-- scripting
+        +-- action        (specific classes)
+        +-- check_collision_action    (specific classes)  
     +-- services
         +-- keyboard_service (specific classes)
         +-- video_service    (specific classes)
