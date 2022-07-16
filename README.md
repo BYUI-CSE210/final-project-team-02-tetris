@@ -79,3 +79,4 @@ Given of all the features above, we believe that we deserve the extra bonus poin
 ## Authors
 * Baron Tshibasu (tshibasubaron@yahoo.fr)
 * Camden Chadsey
+* Chris Kinne
