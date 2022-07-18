@@ -18,7 +18,7 @@ class Score:
         
         Returns: score (higher score as integer)
         """
-        with open('tetris/assets/scores.txt', 'r') as f:
+        with open('assets/scores.txt', 'r') as f:
             lines = f.readlines()
             score = lines[0].strip()
 
